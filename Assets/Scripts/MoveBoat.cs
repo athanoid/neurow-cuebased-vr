@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Assets.LSL4Unity.Scripts.Examples;
 
 // used
 
@@ -97,7 +98,7 @@ public class MoveBoat : MonoBehaviour {
 		//Todo
 		// on 32770 experiment stop
 		// quit app
-		if (Receivemarkers.markerint == 32770) //32770 experiment stop
+		if (LSLMIMarkers.getLSLsample == 32770) //32770 experiment stop
 			Debug.Log ("32770 experiment stop");
 			EndofSessionPanel.SetActive(true); //pop window
 		
@@ -152,13 +153,16 @@ public class MoveBoat : MonoBehaviour {
 
 			getStimOnline ();
 
-//			if (left && hidearrow == true)
-//				left = true;
-//			else left = false;
+            //			if (left && hidearrow == true)
+            //				left = true;
+            //			else left = false;
+            
 
-			if (Input.GetKey (KeyCode.LeftArrow) ||(left && hidearrow)&& ldaSignal()>=0) {
-				//left = true;
-				Debug.Log("inside left arrow");
+            //if (Input.GetKey (KeyCode.LeftArrow) ||(left && hidearrow)&& ldaSignal()>=0) {
+            if (Input.GetKey(KeyCode.LeftArrow) || (left && hidearrow) && LSLClassMarkers.getLSLsample == 769)
+                {
+                    //left = true;
+                    Debug.Log("inside left arrow");
 				countL += 1;	// scoring - left rows
 				//			right = false;
 
@@ -174,7 +178,7 @@ public class MoveBoat : MonoBehaviour {
 					transform.Rotate (Vector3.down * turnspeed * Time.deltaTime, Space.World);
 				//	transform.Translate(Vector3.forward * boatspeed * Time.deltaTime);
 			}
-			else if (Input.GetKey (KeyCode.RightArrow) ||(right && hidearrow) && ldaSignal()<=0) {
+			else if (Input.GetKey (KeyCode.RightArrow) ||(right && hidearrow) && LSLClassMarkers.getLSLsample == 770) {
 				//			left = false;
 				right = true;
 				Debug.Log("inside right arrow");
@@ -213,7 +217,7 @@ public class MoveBoat : MonoBehaviour {
 	// training
 	void getStim()
 	{
-		int stim = Receivemarkers.markerint;
+		int stim = LSLMIMarkers.getLSLsample;
 
 		switch (stim)
 		{
@@ -277,14 +281,14 @@ public class MoveBoat : MonoBehaviour {
 		}
 	}
 
-	public static float ldaSignal(){
-		return Assets.LSL4Unity.Scripts.Examples.ExampleFloatInlet.signal;
-	}
+//	public static float ldaSignal(){
+//		return Assets.LSL4Unity.Scripts.Examples.ExampleFloatInlet.signal;
+//	}
 
 	// online
 	void getStimOnline()
 	{
-		int stim = Receivemarkers.markerint;
+		int stim = LSLMIMarkers.getLSLsample;
 
 		switch (stim)
 		{

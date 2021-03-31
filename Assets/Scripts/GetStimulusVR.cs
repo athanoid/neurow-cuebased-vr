@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.LSL4Unity.Scripts.Examples;
 
 public class GetStimulusVR : MonoBehaviour {
 
@@ -32,7 +33,7 @@ public class GetStimulusVR : MonoBehaviour {
 
 	void getStim()
 	{
-		int stim = Receivemarkers.markerint;
+		int stim = LSLMIMarkers.getLSLsample;
 
 		switch (stim)
 		{

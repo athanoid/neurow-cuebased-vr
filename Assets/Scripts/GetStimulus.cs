@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Assets.LSL4Unity.Scripts.Examples;
 
 // not used
 
@@ -44,7 +45,7 @@ public class GetStimulus : MonoBehaviour {
 
 		getStim ();
 
-		if (Receivemarkers.markerint == 1010) //32770 experiment stop
+		if (LSLMIMarkers.getLSLsample == 1010) //32770 experiment stop
 			EndofSessionPanel.SetActive(true); //pop window
 
 	}
@@ -52,7 +53,7 @@ public class GetStimulus : MonoBehaviour {
 
 	void getStim()
 	{
-		int stim = Receivemarkers.markerint;
+		int stim = LSLMIMarkers.getLSLsample;
 		
 		switch (stim)
 		{
