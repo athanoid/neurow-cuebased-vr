@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// not used
+
 public class Fading : MonoBehaviour {
 
 	public Texture2D fadeOutTexture;
@@ -11,7 +13,6 @@ public class Fading : MonoBehaviour {
 	private int fadeDir = -1;
 
 	void Start(){
-
 		beginFade (1);
 	}
 

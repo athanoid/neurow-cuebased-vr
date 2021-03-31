@@ -5,6 +5,8 @@ using System;
 using System.Reflection;
 using System.Collections;
 
+// not used
+
 public class ClipboardHelper : MonoBehaviour {
 	
 	private static PropertyInfo m_systemCopyBufferProperty = null;
@@ -38,7 +40,6 @@ public class ClipboardHelper : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame

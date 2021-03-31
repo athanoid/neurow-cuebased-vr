@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// not used
+
 public class AngleTest : MonoBehaviour
 {
 	public Transform target;

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// not used
+
 public class Compass : MonoBehaviour
 {
 	public Transform waypoint;

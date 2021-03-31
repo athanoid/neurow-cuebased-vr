@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+// used
+
 public class Settings : MonoBehaviour
 {
 	public GameObject panel;
@@ -9,10 +11,16 @@ public class Settings : MonoBehaviour
 	public GameObject gui;
 	public GameObject scoregui;
 	public GameObject traininggui;
-	public GameObject waypoint;
-	public GameObject arrow;
+	public GameObject waypoint; 
+	//public GameObject arrow;
+//	public GameObject fireworks;
 	
-	public GameObject leap, hands;
+	public GameObject leap, hands, cross, leftarrow, rightarrow;
+	public GameObject rMaleHand, lMaleHand, rFemaleHand, lFemaleHand;
+	public GameObject arrowFRR, arrowFRW, arrowFRG, arrowFRB, arrowFLR, arrowFLW, arrowFLG, arrowFLB;
+	public GameObject arrowBRR, arrowBRW, arrowBRG, arrowBRB, arrowBLR, arrowBLW, arrowBLG, arrowBLB;
+
+	//public GameObject rewardtext;
 	
 	public static bool leapOn = false;
 	public static bool isTraining = false;
@@ -21,13 +29,34 @@ public class Settings : MonoBehaviour
 
 	public static GameObject MainCamera, OculusCamera;
 
+	public Vector3 scaleChange;
+
+	// object reference required to access non-static member "Settings.cross"
+	public static Settings Instance;
+	void Awake(){
+		Instance = this;
+	}
+	
 
 //General Settings -------------------------
 //	static float boatSpeed;
 //	static float turnSpeed;
 //	static float cutOffAngle;
 	static bool audioOn;
+	static bool musicOn;  // for future if music is used
 	public static bool reverseHands;
+	public static bool haptic = true;
+	public static bool male;
+	public static bool female;
+	public static bool stimS;
+	public static bool stimM;
+	public static bool stimL;
+	public static bool points;
+	public static bool percentage;
+	//public static bool flash = true;
+	public static bool flash = false;	// change to true for default SSVEP
+	public static bool redF, whiteF, grayF, blackF;
+	public static bool redB, whiteB, grayB, blackB;
 //------------------------------------------
 
 //Network Settings -------------------------
@@ -38,17 +67,17 @@ public class Settings : MonoBehaviour
 
 //Network Settings -------------------------
 	public static bool oculusRift = false;
-//	static bool leapMotion;
+	static bool leapMotion;
 //------------------------------------------
 
-//Haptics Settings -------------------------
-	public static string comPort;
-	public static float m1Power;
-	public static float m2Power;
-	public static float m3Power;
-	public static float m4Power;
-	public static float m5Power;
-	public static float m6Power;
+//Old Haptics Settings -------------------------
+	public static string comPort = "5";
+	public static float m1Power = 20f;
+	public static float m2Power = 20f;
+	public static float m3Power = 20f;
+	public static float m4Power = 20f;
+	public static float m5Power = 20f;
+	public static float m6Power = 20f;
 //------------------------------------------
 
 	public static string duration;
@@ -58,9 +87,17 @@ public class Settings : MonoBehaviour
 	public InputField dir;
 
 	public static AudioSource waveSound;
-	public AudioClip levelDone;
+	public AudioClip levelDone; // flag sound?
+
 
 	void Start(){
+		rMaleHand = GameObject.Find("RightHandMale");
+		lMaleHand = GameObject.Find("LeftHandMale");
+		rFemaleHand = GameObject.Find("RightHandFemale");
+		lFemaleHand = GameObject.Find("LeftHandFemale");
+		Settings.Instance.rFemaleHand.SetActive(false);
+		Settings.Instance.lFemaleHand.SetActive(false);
+
 
 		scoregui.SetActive (false);
 		traininggui.SetActive (false);
@@ -69,13 +106,13 @@ public class Settings : MonoBehaviour
 
 		getLogDirectory ();
 
-		duration = "480";
+		duration = "600"; //OV duration is 8:55 but set to 530s
 		Scoring.updateDuration(duration);
 
-		MainCamera = GameObject.Find("Main Camera");
-		OculusCamera = GameObject.Find("OVRCameraController");
+		//MainCamera = GameObject.Find("Main Camera");
+		//OculusCamera = GameObject.Find("OVRCameraController");
 
-		OculusCamera.SetActive (false);
+		//OculusCamera.SetActive (false);
 //		isTraining = true;
 
 		if(Application.loadedLevelName == "Game") // BCI MODE
@@ -84,6 +121,7 @@ public class Settings : MonoBehaviour
 			leapOn = false;
 			noAPE = true;
 			reverseHands = true;
+			Debug.Log("Game Mode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 //			gamePause();
 		}
 //		else if(Application.loadedLevelName == "Game_With_APE") // BCI MODE
@@ -113,15 +151,15 @@ public class Settings : MonoBehaviour
 	void showScorePanel(){
 		scoregui.SetActive (true);
 		Time.timeScale = 0f;
-		waveSound.PlayOneShot (levelDone);
-		//Debug.Log ("SCORE!");
+		waveSound.PlayOneShot (levelDone); 
+		Debug.Log ("showScorePanel---------------------------------");
 	}
 
 	void showEndOfTraining(){
 		traininggui.SetActive (true);
 		Time.timeScale = 0f;
-		waveSound.PlayOneShot (levelDone);
-		//Debug.Log ("SCORE!");
+		waveSound.PlayOneShot (levelDone); 
+		Debug.Log ("showEndOfTraining-------------------------------");
 	}
 
 	void hideScorePanel(){
@@ -147,13 +185,18 @@ public class Settings : MonoBehaviour
 	}
 
 	void getLogDirectory(){
+		Debug.Log ("getting the log directory!!!!!!!!!!!!!");
 		logDir = Application.persistentDataPath;
 		dir.text = logDir;
+		Debug.Log ("Log Directory: " + dir.text);
 	}
 
 	// Update is called once per frame
 	void Update () {
-
+		if (female) {
+			Settings.Instance.rFemaleHand.SetActive(true);
+			Settings.Instance.lFemaleHand.SetActive(true);
+		}
 		if (Timeout && !isTraining) {
 			//gamePause();
 			showScorePanel();
@@ -170,17 +213,17 @@ public class Settings : MonoBehaviour
 //		if(Application.loadedLevel == 2 || Application.loadedLevel == 3)
 //		{
 			//enable/disable settings panel
-			if (Input.GetKey (KeyCode.P)) {
-				gamePause();
-			}
+		if (Input.GetKey (KeyCode.P)) {
+			gamePause();
+		}
 //			if (Input.GetKey (KeyCode.L)) {
 //				gameResume();
 //			}
 //			
-			if(Input.GetKey(KeyCode.Escape))
-			{
-				Application.LoadLevel("MainMenu");
-			}
+		if(Input.GetKey(KeyCode.Escape))
+		{
+			Application.LoadLevel("MainMenu");
+		}
 			
 //			if (Input.GetKey (KeyCode.T))
 //			{
@@ -206,21 +249,23 @@ public class Settings : MonoBehaviour
 			if (isTraining) {
 				//			gui.SetActive (false);
 				waypoint.SetActive (false);
-				arrow.SetActive (false);
+				//arrow.SetActive (false);
+				Debug.Log("isTraining");
 			}
 			
 			if (!isTraining) {
 				//			gui.SetActive (true);
 				waypoint.SetActive (true);
-				arrow.SetActive (true);
+				//arrow.SetActive (true);
+				Debug.Log("!isTraining");
 			}
 			
 			//enable/disable leapmotion
 			if (leapOn) {
 				leap.SetActive (true);
-			waypoint.SetActive (true);
-			arrow.SetActive (true);
-				//	hands.SetActive (false);
+				waypoint.SetActive (true);
+				//arrow.SetActive (true);
+				//hands.SetActive (false);
 			}
 			if (!leapOn) {
 				leap.SetActive (false);
@@ -266,7 +311,7 @@ public class Settings : MonoBehaviour
 	{
 		switch(name)
 		{
-		case "Audio":
+		case "BackgroundSound":
 //			print(name+": "+value);
 			audioOn = value;
 			if(audioOn)
@@ -274,19 +319,188 @@ public class Settings : MonoBehaviour
 			else
 				waveSound.Pause();
 			break;
-		case "ReverseHands":
+		case "BackgroundHap":
+			print("Haptic: "+value);
+			haptic = value;
+			break;
+		case "BackgroundMusic":  // for future if music used
+			// figure out how to start and stop music
 			print(name+": "+value);
-			reverseHands = value;
+			musicOn = value;
+			// turn music on and off
+			break;
+// find way to load female scene?
+		case "BackgroundMale":
+			print(name+": "+value);
+			male = value;
+			Settings.Instance.rMaleHand.SetActive(true);
+			Settings.Instance.lMaleHand.SetActive(true);
+			Settings.Instance.rFemaleHand.SetActive(false);
+			Settings.Instance.lFemaleHand.SetActive(false);
+			break;
+// or find way to switch out avatar hands
+		case "BackgroundFemale":
+			print(name+": "+value);
+			female = value;
+			Settings.Instance.rFemaleHand.SetActive(true);
+			Settings.Instance.lFemaleHand.SetActive(true);
+			Settings.Instance.rMaleHand.SetActive(false);
+			Settings.Instance.lMaleHand.SetActive(false);
+			break;
+// cross width & height = 100 && arrow width & height
+		case "BackgroundS":
+//			print(name+": "+value);
+			stimS = value;
+			//change stim size to S
+			Settings.Instance.cross.transform.localScale = new Vector3(1f,1f,1f);
+			Settings.Instance.cross.transform.localPosition = new Vector3(-0.929f,0f,-0.95f);
+			Settings.Instance.leftarrow.transform.localScale = new Vector3(1f,1f,1f);
+			Settings.Instance.leftarrow.transform.localPosition = new Vector3(-0.89f, 0f, 2.21f);
+			Settings.Instance.rightarrow.transform.localScale = new Vector3(1f,1f,1f);
+			Settings.Instance.rightarrow.transform.localPosition = new Vector3(4.7f, 0f, 2.21f);
+//			rewardtext.GetComponent<Text>().fontSize = 30f;
+//			Settings.Instance.rewardtext.transform.localScale = new Vector3(0.5f,0.5f,1f);
+			break;
+// cross width & height = 300 && arrow width & height
+		case "BackgroundMd":
+//			print(name+": "+value);
+			stimM = value;
+			Settings.Instance.cross.transform.localScale = new Vector3(3f,3f,1f);
+			Settings.Instance.cross.transform.localPosition = new Vector3(-0.94f, 4.05f, -0.95f);
+			Settings.Instance.leftarrow.transform.localScale = new Vector3(3f,3f,1f);
+			Settings.Instance.leftarrow.transform.localPosition = new Vector3(-0.6f, 4.1f, 2.21f);
+			Settings.Instance.rightarrow.transform.localScale = new Vector3(3f,3f,1f);
+			Settings.Instance.rightarrow.transform.localPosition = new Vector3(15.6299f, 4.1f, 2.21f);
+//			Settings.Instance.rewardtext.fontSize = 50.0f;
+//			Settings.Instance.rewardtext.transform.localScale = new Vector3(1f,1f,1f);
+			break;
+// cross width & height = 500 && arrow width & height
+		case "BackgroundL":
+			print(name+": "+value);
+			stimL = value;
+			// change stim size to L
+			Settings.Instance.cross.transform.localScale = new Vector3(5f,5f,1f);
+			Settings.Instance.cross.transform.localPosition = new Vector3(-0.94f, 8.7f, -0.95f);
+			Settings.Instance.leftarrow.transform.localScale = new Vector3(5f,5f,1f);
+			Settings.Instance.leftarrow.transform.localPosition = new Vector3(-0.4f, 9f, 2.21f);
+			Settings.Instance.rightarrow.transform.localScale = new Vector3(5f,5f,1f);
+			Settings.Instance.rightarrow.transform.localPosition = new Vector3(26.8f, 9f, 2.21f);
+//			Settings.Instance.rewardtext.fontSize = 75.0f;
+//			Settings.Instance.rewardtext.transform.localScale = new Vector3(2f,2f,1f);
+			break;
+		case "BackgroundFlash":
+			//print(name+": "+value);
+			flash = value;
+			break;
+
+// Front flashing arrow colors
+		case "BackgroundFRed":
+			redF = value;
+			Settings.Instance.arrowFRR.SetActive(true);
+			Settings.Instance.arrowFLR.SetActive(true);
+			Settings.Instance.arrowFRW.SetActive(false);
+			Settings.Instance.arrowFLW.SetActive(false);
+			Settings.Instance.arrowFRG.SetActive(false);
+			Settings.Instance.arrowFLG.SetActive(false);
+			Settings.Instance.arrowFRB.SetActive(false);
+			Settings.Instance.arrowFLB.SetActive(false);
+			break;
+		case "BackgroundFWhite":
+			whiteF = value;
+			Settings.Instance.arrowFRR.SetActive(false);
+			Settings.Instance.arrowFLR.SetActive(false);
+			Settings.Instance.arrowFRW.SetActive(true);
+			Settings.Instance.arrowFLW.SetActive(true);
+			Settings.Instance.arrowFRG.SetActive(false);
+			Settings.Instance.arrowFLG.SetActive(false);
+			Settings.Instance.arrowFRB.SetActive(false);
+			Settings.Instance.arrowFLB.SetActive(false);
+			break;
+		case "BackgroundFGray":
+			grayF = value;
+			Settings.Instance.arrowFRR.SetActive(false);
+			Settings.Instance.arrowFLR.SetActive(false);
+			Settings.Instance.arrowFRW.SetActive(false);
+			Settings.Instance.arrowFLW.SetActive(false);
+			Settings.Instance.arrowFRG.SetActive(true);
+			Settings.Instance.arrowFLG.SetActive(true);
+			Settings.Instance.arrowFRB.SetActive(false);
+			Settings.Instance.arrowFLB.SetActive(false);
+			break;
+		case "BackgroundFBlack":
+			blackF = value;
+			Settings.Instance.arrowFRR.SetActive(false);
+			Settings.Instance.arrowFLR.SetActive(false);
+			Settings.Instance.arrowFRW.SetActive(false);
+			Settings.Instance.arrowFLW.SetActive(false);
+			Settings.Instance.arrowFRG.SetActive(false);
+			Settings.Instance.arrowFLG.SetActive(false);
+			Settings.Instance.arrowFRB.SetActive(true);
+			Settings.Instance.arrowFLB.SetActive(true);
+			break;
+
+// Back flashing arrow colors
+		case "BackgroundBRed":
+			redB = value;
+			Settings.Instance.arrowBRR.SetActive(true);
+			Settings.Instance.arrowBLR.SetActive(true);
+			Settings.Instance.arrowBRW.SetActive(false);
+			Settings.Instance.arrowBLW.SetActive(false);
+			Settings.Instance.arrowBRG.SetActive(false);
+			Settings.Instance.arrowBLG.SetActive(false);
+			Settings.Instance.arrowBRB.SetActive(false);
+			Settings.Instance.arrowBLB.SetActive(false);
+			break;
+		case "BackgroundBWhite":
+			whiteB = value;
+			Settings.Instance.arrowBRR.SetActive(false);
+			Settings.Instance.arrowBLR.SetActive(false);
+			Settings.Instance.arrowBRW.SetActive(true);
+			Settings.Instance.arrowBLW.SetActive(true);
+			Settings.Instance.arrowBRG.SetActive(false);
+			Settings.Instance.arrowBLG.SetActive(false);
+			Settings.Instance.arrowBRB.SetActive(false);
+			Settings.Instance.arrowBLB.SetActive(false);
+			break;
+		case "BackgroundBGray":
+			grayB = value;
+			Settings.Instance.arrowBRR.SetActive(false);
+			Settings.Instance.arrowBLR.SetActive(false);
+			Settings.Instance.arrowBRW.SetActive(false);
+			Settings.Instance.arrowBLW.SetActive(false);
+			Settings.Instance.arrowBRG.SetActive(true);
+			Settings.Instance.arrowBLG.SetActive(true);
+			Settings.Instance.arrowBRB.SetActive(false);
+			Settings.Instance.arrowBLB.SetActive(false);
+			break;
+		case "BackgroundBBlack":
+			blackB = value;
+			Settings.Instance.arrowBRR.SetActive(false);
+			Settings.Instance.arrowBLR.SetActive(false);
+			Settings.Instance.arrowBRW.SetActive(false);
+			Settings.Instance.arrowBLW.SetActive(false);
+			Settings.Instance.arrowBRG.SetActive(false);
+			Settings.Instance.arrowBLG.SetActive(false);
+			Settings.Instance.arrowBRB.SetActive(true);
+			Settings.Instance.arrowBLB.SetActive(true);
+			break;
+
+		case "BackgroundPoints": // reward points
+			//print(name+": "+value);
+			points = value;
+			break;
+		case "BackgroundPer": // reward accuracy percentages
+			percentage = value;
 			break;
 		case "Use":
 //			print(name+": "+value);
 			useNetwork = value;
 			break;
-		case "OculusRift":
+//		case "OculusRift":
 //			print(name+": "+value);
-			oculusRift = value;
-			switchCamera(oculusRift);
-			break;
+//			oculusRift = value;
+//			switchCamera(oculusRift);
+//			break;
 		case "LeapMotion":
 //			print(name+": "+value);
 			Settings.leapOn = value;
@@ -302,17 +516,17 @@ public class Settings : MonoBehaviour
 		}
 	}
 
-	public static void switchCamera(bool oculus){
+//	public static void switchCamera(bool oculus){
 
-		if (oculus) {
-			OculusCamera.SetActive(true);
-			MainCamera.SetActive(false);
-		}
-		else{
-			OculusCamera.SetActive(false);
-			MainCamera.SetActive(true);
-		}
-	}
+//		if (oculus) {
+//			OculusCamera.SetActive(true);
+//			MainCamera.SetActive(false);
+//		}
+//		else{
+//			OculusCamera.SetActive(false);
+//			MainCamera.SetActive(true);
+//		}
+//	}
 
 
 	public static void updateVariables(string name, float value)

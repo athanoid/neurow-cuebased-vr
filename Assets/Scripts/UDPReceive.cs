@@ -8,6 +8,8 @@ using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 
+// not used
+
 public class UDPReceive : MonoBehaviour {
 
  // receiving Thread
@@ -36,6 +38,7 @@ public class UDPReceive : MonoBehaviour {
 	
 	public static string tempstr = "";
 
+
     // public
     public int port; // define > init
 	public static string portField = "1205";
@@ -61,6 +64,7 @@ public class UDPReceive : MonoBehaviour {
 	
     void Start()
     {
+    	Debug.Log("inside UDP Receive");
 		sem1 = new Semaphore (1, 1);
 
 		windowRect0 = new Rect(Screen.width - 220, Screen.height / 2-100, 200, 150);//posx, posy, width, height
@@ -114,7 +118,7 @@ public class UDPReceive : MonoBehaviour {
     // receive thread 
     public void ReceiveData() 
     {	
-		//Debug.Log("ReceiveData!!!!!!!!!!!");
+//		Debug.Log("ReceiveData!!!!!!!!!!!");
 		client = new UdpClient(port);
 		client.Client.SetSocketOption (SocketOptionLevel.Socket, SocketOptionName.ReceiveBuffer, 0);
 		Debug.Log ("Started UDP - port: " + port);
@@ -221,7 +225,6 @@ public class UDPReceive : MonoBehaviour {
 	if(Settings.isTraining)
 	{
 		print("training\n");
-
 			if(transformationtype == "both" && words[5] == "00")
 			{
 				MoveBoat.left = false;
@@ -274,6 +277,7 @@ public class UDPReceive : MonoBehaviour {
 //		else
 //		{
 //				print(transformationtype+"\n");
+
 				if(transformationtype == "both" && (Convert.ToSingle(words [4]) <  0))
 			{
 //					print("left\n");
@@ -293,7 +297,7 @@ public class UDPReceive : MonoBehaviour {
 				//					print("right\n");
 				MoveBoat.left = false;
 				MoveBoat.right = false;
-			}
+			}			
 //		}
 	}
 

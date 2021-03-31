@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// not used
+
 public class ButtonClick : MonoBehaviour {
 
 	public GameObject chooseModePanel;
 
 	void Awake()
 	{
+
 //		chooseModePanel = GameObject.Find("ChooseMode");
 //		chooseModePanel.SetActive (false);
 

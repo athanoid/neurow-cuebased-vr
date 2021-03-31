@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+// used
+
 public class InfiniteTerrain : MonoBehaviour
 {
 	public GameObject PlayerObject;

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// used
+
 public class HandCollision : MonoBehaviour {
 
 	public static bool grabbed = false;
@@ -8,7 +10,6 @@ public class HandCollision : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame

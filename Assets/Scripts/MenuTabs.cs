@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+// not used
+
 public class MenuTabs : MonoBehaviour
 {
 	Color c;

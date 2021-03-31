@@ -4,6 +4,8 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Net;
 
+// used
+
 public class UpdateValueLabel : MonoBehaviour
 {
 	Slider thisSlider;

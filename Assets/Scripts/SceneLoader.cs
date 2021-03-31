@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// not used
+
 public class SceneLoader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 		Invoke ("loadMainMenu", 1);
 	}
 	

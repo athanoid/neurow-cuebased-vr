@@ -117,7 +117,6 @@ public class OvrAvatar : MonoBehaviour
     // Avatar asset
     private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
     private bool assetsFinishedLoading = false;
-    private int renderPartCount = 0;
 
     // Material manager
     private OvrAvatarMaterialManager materialManager;
@@ -151,7 +150,7 @@ public class OvrAvatar : MonoBehaviour
     private bool showRightController;
 
     // Consts
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
     private const bool USE_MOBILE_TEXTURE_FORMAT = true;
 #else
     private const bool USE_MOBILE_TEXTURE_FORMAT = false;
@@ -174,7 +173,7 @@ public class OvrAvatar : MonoBehaviour
     internal OvrAvatarHand HandLeft = null;
     internal OvrAvatarHand HandRight = null;
     internal ovrAvatarLookAndFeelVersion LookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
-    internal ovrAvatarLookAndFeelVersion FallbackLookAndFeelVersion = ovrAvatarLookAndFeelVersion.One;
+    internal ovrAvatarLookAndFeelVersion FallbackLookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
 #if AVATAR_INTERNAL
     public AvatarControllerBlend BlendController;
     public UnityEvent AssetsDoneLoading = new UnityEvent();
@@ -516,6 +515,12 @@ public class OvrAvatar : MonoBehaviour
         ShowLeftController(showLeftController);
         ShowRightController(showRightController);
 
+        // Pump the Remote driver once to push the controller type through
+        if (Driver != null)
+        {
+            Driver.UpdateTransformsFromPose(sdkAvatar);
+        }
+
         //Fetch all the assets that this avatar uses.
         UInt32 assetCount = CAPI.ovrAvatar_GetReferencedAssetCount(sdkAvatar);
         for (UInt32 i = 0; i < assetCount; ++i)
@@ -587,6 +592,7 @@ public class OvrAvatar : MonoBehaviour
         AvatarLogger.Log(AvatarLogger.Tab + "Oculus User ID: " + oculusUserIDInternal);
 
         Capabilities = 0;
+
         if (EnableBody) Capabilities |= ovrAvatarCapabilities.Body;
         if (EnableHands) Capabilities |= ovrAvatarCapabilities.Hands;
         if (EnableBase && EnableBody) Capabilities |= ovrAvatarCapabilities.Base;
@@ -656,7 +662,15 @@ public class OvrAvatar : MonoBehaviour
         {
             if (!assetsFinishedLoading)
             {
-                BuildRenderComponents();
+                try
+                {
+                    BuildRenderComponents();
+                }
+                catch (Exception e)
+                {
+                    assetsFinishedLoading = true;
+                    throw e; // rethrow the original exception to preserve callstack
+                }
 #if AVATAR_INTERNAL
                 AssetsDoneLoading.Invoke();
 #endif
@@ -968,12 +982,26 @@ public class OvrAvatar : MonoBehaviour
 
     bool IsValidMic()
     {
-        if (Microphone.devices.Length < 1)
+        string[] devices = Microphone.devices;
+
+        if (devices.Length < 1)
         {
             return false;
         }
 
-        string selectedDevice = Microphone.devices[0].ToString();
+        int selectedDeviceIndex = 0;
+#if UNITY_STANDALONE_WIN
+        for (int i = 1; i < devices.Length; i++)
+        {
+            if (devices[i].ToUpper().Contains("RIFT"))
+            {
+                selectedDeviceIndex = i;
+                break;
+            }
+        }
+#endif
+
+        string selectedDevice = devices[selectedDeviceIndex];
 
         int minFreq;
         int maxFreq;
