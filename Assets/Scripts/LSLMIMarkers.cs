@@ -21,6 +21,7 @@ namespace Assets.LSL4Unity.Scripts.Examples
         private bool pullSamplesContinuously = false;
 
         private static int lslsample;
+        public int lslDebug;
 
         //public Text stim1;
         //public Text stim2;
@@ -62,7 +63,8 @@ namespace Assets.LSL4Unity.Scripts.Examples
 
             getLSLsample = (int)newSample[0];
 
-            Debug.Log("Target Marker: "+getLSLsample);
+            lslDebug = getLSLsample;
+            //Debug.Log("Target Marker: "+getLSLsample);
             //stim1.text = lslsignal.ToString();
             //stim2.text = lslsignal.ToString();
 
