@@ -245,32 +245,36 @@ public class Settings : MonoBehaviour
 //			}
 			
 			
-			//enable/disable BCI training mode
-			if (isTraining) {
-				//			gui.SetActive (false);
-				waypoint.SetActive (false);
-				//arrow.SetActive (false);
-				Debug.Log("isTraining");
-			}
-			
-			if (!isTraining) {
-				//			gui.SetActive (true);
-				waypoint.SetActive (true);
-				//arrow.SetActive (true);
-				Debug.Log("!isTraining");
-			}
-			
-			//enable/disable leapmotion
-			if (leapOn) {
-				leap.SetActive (true);
-				waypoint.SetActive (true);
-				//arrow.SetActive (true);
-				//hands.SetActive (false);
-			}
-			if (!leapOn) {
-				leap.SetActive (false);
-				hands.SetActive (true);
-			}
+		// regacy neurow %%%%%%%%%%%%
+//
+//			//enable/disable BCI training mode
+//			if (isTraining) {
+//				//			gui.SetActive (false);
+//				waypoint.SetActive (false);
+//				//arrow.SetActive (false);
+//				Debug.Log("isTraining");
+//			}
+//			
+//			if (!isTraining) {
+//				//			gui.SetActive (true);
+//				waypoint.SetActive (true);
+//				//arrow.SetActive (true);
+//				Debug.Log("!isTraining");
+//			}
+//			
+//			//enable/disable leapmotion
+//			if (leapOn) {
+//				leap.SetActive (true);
+//				waypoint.SetActive (true);
+//				//arrow.SetActive (true);
+//				//hands.SetActive (false);
+//			}
+//			if (!leapOn) {
+//				leap.SetActive (false);
+//				hands.SetActive (true);
+//			}
+
+
 		//}
 	}
 

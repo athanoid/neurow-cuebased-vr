@@ -104,7 +104,7 @@ public class MoveBoat : MonoBehaviour {
 
 
 		if (training) {
-			Debug.Log("inside MoveBoat training");
+			//Debug.Log("inside MoveBoat training");
 
 			getStim ();
 			
