@@ -43,7 +43,8 @@ public class RotateRow : MonoBehaviour {
 				if(Settings.haptic){
 					//OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.LTouch);
 					StartCoroutine(Haptics (1, 1, 4.0f, false, true));
-					Debug.Log ("VIBRATE left training!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    //if (Application.isEditor)
+                    //    Debug.Log ("VIBRATE left training!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}
 			//if (MoveBoat.left == false && this.gameObject.name != "Lpivot") {
@@ -58,7 +59,8 @@ public class RotateRow : MonoBehaviour {
 				if(Settings.haptic){
 					//OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
 					StartCoroutine(Haptics (1, 1, 4.0f, true, false));
-					Debug.Log ("VIBRATE right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                   //if (Application.isEditor)
+                   //     Debug.Log ("VIBRATE right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}
 
