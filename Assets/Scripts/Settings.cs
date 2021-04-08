@@ -24,8 +24,9 @@ public class Settings : MonoBehaviour
 	
 	public static bool leapOn = false;
 	public static bool isTraining = false;
+    public static bool noshow = false;
 
-	public static bool noAPE;
+    public static bool noAPE;
 
 	public static GameObject MainCamera, OculusCamera;
 
@@ -149,17 +150,21 @@ public class Settings : MonoBehaviour
 	}
 
 	void showScorePanel(){
-		scoregui.SetActive (true);
-		Time.timeScale = 0f;
-		waveSound.PlayOneShot (levelDone); 
-		Debug.Log ("showScorePanel---------------------------------");
+        //scoregui.SetActive (true);
+        //Time.timeScale = 0f;
+        //waveSound.PlayOneShot (levelDone); 
+        panel.SetActive(true);
+        noshow = true;
+        Debug.Log ("showScorePanel---------------------------------");
 	}
 
 	void showEndOfTraining(){
-		traininggui.SetActive (true);
-		Time.timeScale = 0f;
-		waveSound.PlayOneShot (levelDone); 
-		Debug.Log ("showEndOfTraining-------------------------------");
+		//traininggui.SetActive (true);
+        //Time.timeScale = 0f;
+        //waveSound.PlayOneShot (levelDone); 
+        panel.SetActive(true);
+        noshow = true;
+        Debug.Log ("showEndOfTraining-------------------------------");
 	}
 
 	void hideScorePanel(){
@@ -197,15 +202,16 @@ public class Settings : MonoBehaviour
 			Settings.Instance.rFemaleHand.SetActive(true);
 			Settings.Instance.lFemaleHand.SetActive(true);
 		}
-		if (Timeout && !isTraining) {
+		if (Timeout && !isTraining && !noshow) {
 			//gamePause();
-			showScorePanel();
-			Timeout = false;
+
+            showScorePanel();
+			//Timeout = false;
 		}
-		if (Timeout && isTraining) {
+		if (Timeout && isTraining && !noshow) {
 			//gamePause();
 			showEndOfTraining();
-			Timeout = false;
+			//Timeout = false;
 		}
 
 //		Debug.Log ("leap: " + DisconnectionNotice.IsConnected());

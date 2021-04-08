@@ -84,24 +84,26 @@ public class MoveBoat : MonoBehaviour {
 		//-------------------------------------------------------------------------------
 		// COULD BE WHY BOAT MOVES IN BEGINNING OF GAME???????
 		transform.Translate(Vector3.forward * boatspeed * Time.deltaTime);
-		//-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
 
-		//if((compass.localEulerAngles.y >= (360 - stoppingAngle) && compass.localEulerAngles.y <= 360) || (compass.localEulerAngles.y >= 0 && compass.localEulerAngles.y <= (0 + stoppingAngle)))
-		//	transform.Translate(Vector3.forward * boatspeed * Time.deltaTime);
+        //if((compass.localEulerAngles.y >= (360 - stoppingAngle) && compass.localEulerAngles.y <= 360) || (compass.localEulerAngles.y >= 0 && compass.localEulerAngles.y <= (0 + stoppingAngle)))
+        //	transform.Translate(Vector3.forward * boatspeed * Time.deltaTime);
 
-		// not sure what 1010 is
-		//if (Receivemarkers.markerint == 1010) 
-			//EndofSessionPanel.SetActive(true); //pop window
-			//Debug.Log ("End of Session!");
+        // not sure what 1010 is
+        //if (Receivemarkers.markerint == 1010) 
+        //EndofSessionPanel.SetActive(true); //pop window
+        //Debug.Log ("End of Session!");
 
 
-		//Todo
-		// on 32770 experiment stop
-		// quit app
-		if (LSLMIMarkers.getLSLsample == 32770) //32770 experiment stop
-			Debug.Log ("32770 experiment stop");
-			EndofSessionPanel.SetActive(true); //pop window
-		
+        //Todo
+        // on 32770 experiment stop
+        // quit app
+        if (LSLMIMarkers.getLSLsample == 32770 && !Settings.Timeout)
+        { //32770 experiment stop
+            Debug.Log("32770 experiment stop");
+            EndofSessionPanel.SetActive(true); //pop window
+            Settings.Timeout = true;
+        }
 
 
 		if (training) {
