@@ -1,6 +1,0 @@
-- Ambient sound
-- beep before cross
-- skin color
-- main menu
-- end of session text on 3D
-- haptic feedback
