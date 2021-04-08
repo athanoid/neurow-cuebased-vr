@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Old Scenes/Game.unity
     guid: 1f271ec8f5226174ba6b0947c6ac37eb
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/boat_training.unity
     guid: 876b0d51e9c7a814985297e2f65bb2db
   - enabled: 0
