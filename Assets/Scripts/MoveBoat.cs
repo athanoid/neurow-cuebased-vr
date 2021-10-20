@@ -223,7 +223,7 @@ public class MoveBoat : MonoBehaviour {
 
 		switch (stim)
 		{
-		case 800: //hide cross
+		case 800: case 10: //hide cross
 			OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
 			OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
 			crossui.SetActive(false);
@@ -234,7 +234,7 @@ public class MoveBoat : MonoBehaviour {
 			right = false;
 			hidearrow = false;
 			break;
-		case 786: // show cross
+		case 786: case 5: // show cross
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(false);
@@ -243,7 +243,7 @@ public class MoveBoat : MonoBehaviour {
 			right = false;
 			hidearrow = false;
 			break;
-		case 770: // right arrow
+		case 770:  case 8: // right arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(true);
@@ -256,7 +256,7 @@ public class MoveBoat : MonoBehaviour {
 			right = true;
 			hidearrow = false;
 			break;
-		case 769: // left arrow
+		case 769: case 7:// left arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(true);
 			rightarrow.SetActive(false);
@@ -269,7 +269,7 @@ public class MoveBoat : MonoBehaviour {
 			right = false;
 			hidearrow = false;
 			break;
-		case 781: // hide arrow
+		case 781: case 9:// hide arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(false);
@@ -294,7 +294,7 @@ public class MoveBoat : MonoBehaviour {
 
 		switch (stim)
 		{
-		case 800: //hide cross
+		case 800: case 10://hide cross
 			crossui.SetActive(false);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(false);
@@ -307,7 +307,7 @@ public class MoveBoat : MonoBehaviour {
 			OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
 			OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
 			break;
-		case 786: // show cross
+		case 786:  case 5:// show cross
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(false);
@@ -318,7 +318,7 @@ public class MoveBoat : MonoBehaviour {
 			case800 = false;
 			case786 = true;
 			break;
-		case 770: // right arrow
+		case 770: case 8: // right arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(true);
@@ -331,7 +331,7 @@ public class MoveBoat : MonoBehaviour {
 			case800 = false;
 			case786 = false;
 			break;
-		case 769: // left arrow
+		case 769: case 7: // left arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(true);
 			rightarrow.SetActive(false);
@@ -346,7 +346,7 @@ public class MoveBoat : MonoBehaviour {
 			case800 = false;
 			case786 = false;
 			break;
-		case 781: // hide arrow
+		case 781:  case 9:// hide arrow
 			crossui.SetActive(true);
 			leftarrow.SetActive(false);
 			rightarrow.SetActive(false);
