@@ -8,8 +8,7 @@
 This work is based on [NeuRow](https://www.researchgate.net/publication/303518963_NeuRow_An_Immersive_VR_Environment_for_Motor-Imagery_Training_with_the_Use_of_Brain-Computer_Interfaces_and_Vibrotactile_Feedback), a MI-BCI training paradigm in VR.
 
 
-## Citation
-### When using for your research, please cite the following:
+## Cite
 ```
 @inproceedings{vourvopoulos2016neurow,
   title={NeuRow: an immersive VR environment for motor-imagery training with the use of brain-computer interfaces and vibrotactile feedback},
@@ -18,6 +17,6 @@ This work is based on [NeuRow](https://www.researchgate.net/publication/30351896
   volume={2},
   pages={43--53},
   year={2016},
-  organization={SCITEPRESS}
+  organization={SCITEPRESS},
+  url = "http://dx.doi.org/10.5220/0005939400430053"
 }
-```
