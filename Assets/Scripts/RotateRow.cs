@@ -68,7 +68,7 @@ public class RotateRow : MonoBehaviour {
 		} else { // for ONLINE
 
 			// Row Left 
-			if ((Input.GetKey (KeyCode.LeftArrow) ||(MoveBoat.left && MoveBoat.hidearrow && LSLClassMarkers.getLSLsample == 769) ) && this.gameObject.name == "Lpivot") {
+			if ((Input.GetKey (KeyCode.LeftArrow) ||(MoveBoat.left && MoveBoat.hidearrow && LSLNeuxus.getLSLleft == 1) ) && this.gameObject.name == "Lpivot") {
 				GameObject.FindGameObjectWithTag ("LeftRow").transform.Rotate (Vector3.right * speed * Time.deltaTime);
 				// Oculus left haptic feedback
 				if(Settings.haptic){
@@ -76,13 +76,13 @@ public class RotateRow : MonoBehaviour {
 					Debug.Log ("VIBRATE left online!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}
-			if ((MoveBoat.left && LSLClassMarkers.getLSLsample == 770) || MoveBoat.cross == false) {
+			if ((MoveBoat.left && LSLNeuxus.getLSLleft == 0) || MoveBoat.cross == false) {
 				Debug.Log ("STOP VIBRATING LEFT ONLINE!!!!!!!!");
 				OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
 			}
 
 			// Row Right 
-			if ((Input.GetKey (KeyCode.RightArrow) || (MoveBoat.right && MoveBoat.hidearrow && LSLClassMarkers.getLSLsample == 770) ) && this.gameObject.name == "Rpivot") {
+			if ((Input.GetKey (KeyCode.RightArrow) || (MoveBoat.right && MoveBoat.hidearrow && LSLNeuxus.getLSLright == 1) ) && this.gameObject.name == "Rpivot") {
 				GameObject.FindGameObjectWithTag ("RightRow").transform.Rotate (Vector3.right * speed * Time.deltaTime);
 				// Oculus right haptic feedback
 				if(Settings.haptic){
@@ -90,7 +90,7 @@ public class RotateRow : MonoBehaviour {
 					Debug.Log ("VIBRATE right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}
-			if ((MoveBoat.right && LSLClassMarkers.getLSLsample == 769) || MoveBoat.cross == false) {
+			if ((MoveBoat.right && LSLNeuxus.getLSLright == 0) || MoveBoat.cross == false) {
 				Debug.Log ("STOP VIBRATING RIGHT ONLINE!!!!!!!!");
 				OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
 			}
