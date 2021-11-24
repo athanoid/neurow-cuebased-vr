@@ -1,4 +1,4 @@
-﻿﻿using System.Collections; 
+﻿using System.Collections; 
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.LSL4Unity.Scripts.AbstractInlets;
@@ -20,9 +20,10 @@ namespace Assets.LSL4Unity.Scripts.Examples
 
         private bool pullSamplesContinuously = false;
 
-        private static int lslsample;
-        public int lslLeft;
-        public int lslRight;
+        private static int lslsampleL;
+		private static int lslsampleR;
+		public int lslLeft;
+		public int lslRight;
 
         //public Text stim1;
         //public Text stim2;
@@ -30,14 +31,14 @@ namespace Assets.LSL4Unity.Scripts.Examples
 
         public static int getLSLleft
         {
-            get { return lslsample; }   // get
-            set { lslsample = value; }  // set
+            get { return lslsampleL; }   // get
+            set { lslsampleL = value; }  // set
         }
 
         public static int getLSLright
         {
-            get { return lslsample; }   // get
-            set { lslsample = value; }  // set
+            get { return lslsampleR; }   // get
+            set { lslsampleR = value; }  // set
         }
 
         void Start()
@@ -68,8 +69,8 @@ namespace Assets.LSL4Unity.Scripts.Examples
         protected override void Process(float[] newSample, double timeStamp)
         {
 
-            getLSLleft = (int)newSample[0];
-            getLSLright = (int)newSample[1];
+			getLSLleft = Mathf.RoundToInt(newSample[0]);
+			getLSLright = Mathf.RoundToInt(newSample[1]);
 
             lslLeft = getLSLleft;
             lslRight = getLSLright;

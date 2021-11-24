@@ -80,7 +80,7 @@ public static Scoring Instance;
 
 	void Update()
 	{
-		Debug.Log("inside scoring update");
+//		Debug.Log("inside scoring update");
 		if(scoreText != null)
 		{
 			//Debug.Log("inside score!=null");
