@@ -55,7 +55,7 @@ public class MoveBoat : MonoBehaviour {
 		
 		Debug.Log ("about to call scenemanager!!!!!!!!!!!!!!!!!!");
 		// check scene name to enable training
-		if (SceneManager.GetActiveScene().name == "boat_online") {
+		if (SceneManager.GetActiveScene().name == "boat_online" || SceneManager.GetActiveScene().name == "boat_online_neuxus") {
 			Debug.Log ("boat is online!!!!!!!!!!!!!!!!!!");
 			training = false;
 		} 
@@ -151,7 +151,7 @@ public class MoveBoat : MonoBehaviour {
 		} 
 
 		else { // if Online
-			Debug.Log("inside MoveBoat online"); 
+//			Debug.Log("inside MoveBoat online"); 
 
 			getStimOnline ();
 
@@ -161,10 +161,10 @@ public class MoveBoat : MonoBehaviour {
             
 
             //if (Input.GetKey (KeyCode.LeftArrow) ||(left && hidearrow)&& ldaSignal()>=0) {
-            if (Input.GetKey(KeyCode.LeftArrow) || (left && hidearrow) && LSLClassMarkers.getLSLsample == 769)
-                {
+			if ((Input.GetKey(KeyCode.LeftArrow) || (left && hidearrow)) && LSLNeuxus.getLSLC4 == 1)
+				{
                     //left = true;
-                    Debug.Log("inside left arrow");
+//                    Debug.Log("inside left arrow");
 				countL += 1;	// scoring - left rows
 				//			right = false;
 
@@ -180,10 +180,10 @@ public class MoveBoat : MonoBehaviour {
 					transform.Rotate (Vector3.down * turnspeed * Time.deltaTime, Space.World);
 				//	transform.Translate(Vector3.forward * boatspeed * Time.deltaTime);
 			}
-			else if (Input.GetKey (KeyCode.RightArrow) ||(right && hidearrow) && LSLClassMarkers.getLSLsample == 770) {
+			else if ((Input.GetKey (KeyCode.RightArrow) ||(right && hidearrow)) &&  LSLNeuxus.getLSLC3 == 1) {
 				//			left = false;
 				right = true;
-				Debug.Log("inside right arrow");
+//				Debug.Log("inside right arrow");
 				countR += 1;	// scoring - right rows
 
 				// Oculus right haptic feedback

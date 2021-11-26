@@ -22,20 +22,20 @@ namespace Assets.LSL4Unity.Scripts.Examples
 
         private static int lslsampleL;
 		private static int lslsampleR;
-		public int lslLeft;
-		public int lslRight;
+		public int lslC3;
+		public int lslC4;
 
         //public Text stim1;
         //public Text stim2;
 
 
-        public static int getLSLleft
+        public static int getLSLC3
         {
             get { return lslsampleL; }   // get
             set { lslsampleL = value; }  // set
         }
 
-        public static int getLSLright
+        public static int getLSLC4
         {
             get { return lslsampleR; }   // get
             set { lslsampleR = value; }  // set
@@ -69,11 +69,11 @@ namespace Assets.LSL4Unity.Scripts.Examples
         protected override void Process(float[] newSample, double timeStamp)
         {
 
-			getLSLleft = Mathf.RoundToInt(newSample[0]);
-			getLSLright = Mathf.RoundToInt(newSample[1]);
+			getLSLC3 = Mathf.RoundToInt(newSample[0]);
+			getLSLC4 = Mathf.RoundToInt(newSample[1]);
 
-            lslLeft = getLSLleft;
-            lslRight = getLSLright;
+			lslC3 = getLSLC3;
+			lslC4 = getLSLC4;
 
             //Debug.Log("Target Marker: "+getLSLsample);
             //stim1.text = lslsignal.ToString();
